@@ -1,12 +1,4 @@
-// server.js
-// ─────────────────────────────────────────────────
-// Express application entry point.
-// Loads environment variables, connects to MongoDB,
-// registers middleware, mounts routes, and starts
-// the HTTP server.
-// ─────────────────────────────────────────────────
 
-// Load .env variables FIRST — before any other require
 require("dotenv").config();
 
 const express    = require("express");
@@ -19,11 +11,7 @@ const PORT = process.env.PORT || 8080;
 // ── Connect to MongoDB ────────────────────────────
 connectDB();
 
-// ── Global Middleware ─────────────────────────────
 
-// Enable CORS for all origins in development.
-// In production, restrict to your frontend domain:
-//   app.use(cors({ origin: "https://yourdomain.com" }))
 app.use(cors());
 
 // Parse incoming JSON request bodies
