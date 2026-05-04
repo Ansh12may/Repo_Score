@@ -1,31 +1,14 @@
-// src/api/analyze.js
-// ─────────────────────────────────────────────────
-// Thin API client for communicating with the backend.
-// All HTTP calls are centralised here — no fetch/axios
-// calls scattered across components.
-// ─────────────────────────────────────────────────
 
 import axios from "axios";
 
-// Base URL — Vite's proxy forwards /api/* to localhost:5000
-// In production, replace with your deployed backend URL.
-const API_BASE = "/api";
+// Use env variable in production, fallback to proxy in dev
+const API_BASE = import.meta.env.VITE_API_URL || "/api";
 
-/**
- * analyzeRepo
- * Sends a GitHub repo URL to the backend for evaluation.
- *
- * @param {string} repoUrl — full GitHub URL
- * @returns {Object} data — { score, issues, suggestions, staticAnalysis, … }
- * @throws {Error} with a user-friendly message on failure
- */
 export const analyzeRepo = async (repoUrl) => {
   try {
-    const response = await axios.post(`${API_BASE}/analyze`, { repoUrl });
-    // Backend wraps the payload in { success: true, data: { … } }
+    const response = await axios.post(`${API_BASE}/api/analyze`, { repoUrl });
     return response.data.data;
   } catch (error) {
-    // Extract the most useful error message available
     const message =
       error.response?.data?.message ||
       error.message ||
@@ -34,15 +17,9 @@ export const analyzeRepo = async (repoUrl) => {
   }
 };
 
-/**
- * getHistory
- * Fetches the last 20 evaluations from the database.
- *
- * @returns {Array} list of past evaluations
- */
 export const getHistory = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/analyze/history`);
+    const response = await axios.get(`${API_BASE}/api/analyze/history`);
     return response.data.data;
   } catch (error) {
     const message =

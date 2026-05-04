@@ -1,7 +1,4 @@
-// vite.config.js
-// Vite configuration for the React frontend.
-// The proxy setting forwards /api requests to the backend
-// during development — no CORS issues, no hardcoded URLs.
+
 
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
